@@ -1,4 +1,4 @@
-# gerald_bot
+# LiveCodingTV Chat Bot
 A chat bot made for LiveCoding.tv
 
 ### How To use
