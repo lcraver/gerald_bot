@@ -1,3 +1,6 @@
+// Made by Liam Craver @lcraver
+// Code at: github.com/lcraver/gerald_bot
+
 // CONSTANTS
 var container = $('.message-pane');
 var messageQueue = [];
