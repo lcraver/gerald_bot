@@ -185,7 +185,6 @@ Array.prototype.contains = function(k) {
   return false;
 }
 
-
 function postMessage(message) {
     botWritingCount++;
 
@@ -275,11 +274,6 @@ function processMessage() {
               a = a.rand().replace("{{user}}", userName);
               postMessage(a);
             }
-
-            /*else {
-              var a = ["Sorry but I'm not sure how to respond to that :/", "???", "umm...what?"];
-              postMessage(a.rand());
-            }*/
             return;
           }
           else
@@ -290,7 +284,6 @@ function processMessage() {
             {
               commandOnly = command.substring(0, command.indexOf(" "));
               parameters = command.substring(command.indexOf(" ") + 1, command.length).split(" ");
-              console.log("Norm Command : " + commandOnly + " params: " + parameters.toString());
             }
             else
             {
@@ -298,77 +291,77 @@ function processMessage() {
               parameters = null;
             }
             switch(commandOnly.toLowerCase()) {
-                  case '!help':
-                      var availableCommands = BASE_COMMANDS;
-                      /*if(isAdmin(userName)) {
-                          availableCommands = availableCommands.concat(getAdminCommands());
-                      }*/
-                      postMessage(getGeraldHelpText());
+                case '!help':
+                    var availableCommands = BASE_COMMANDS;
+                    postMessage(getGeraldHelpText());
+                break;
+                case '!time':
+                  var hour = new Date().getHours();
+                  var timeMessage = 'The current time is ' + (new Date().toLocaleTimeString()) + ".";
+
+                  if(hour < 5)
+                    timeMessage += " " + owner_name + "should definitely be in bed..."
+                  else if(hour < 8)
+                    timeMessage += " " + owner_name + "either didn't go to bed or woke up really early (bet it was the first one)."
+
+                  postMessage(timeMessage);
                   break;
-                  case '!time':
-                    var hour = new Date().getHours();
-                    var timeMessage = 'The current time is ' + (new Date().toLocaleTimeString()) + ".";
-
-                    if(hour < 5)
-                      timeMessage += " " + owner_name + "should definitely be in bed..."
-                    else if(hour < 8)
-                      timeMessage += " " + owner_name + "either didn't go to bed or woke up really early (bet it was the first one)."
-
-                    postMessage(timeMessage);
-                    break;
-                  case '!game':
-                    postMessage("You can find out more about Project Arrhythmia at http://projectarrhythmia.com");
-                    break;
-                  case '!website':
-                    postMessage("Liam has a site at http://limestudios.net");
-                    break;
-                  case '!points':
-                    postMessage("You have " + localStorage.getItem("points_"+userName) + " points " + userName + ".");
-                    break;
-                  case '@gerald':
-                    if(parameters != null)
-                    {
-                      console.log("Gerald Command : " + parameters[0]);
-                      switch (parameters[0]) {
-                        case 'song':
-                          if(checkPoints(userName, 30) || isAdmin(userName))
-                          {
-                            postMessage("[X] Song [" + parameters[1] + "] requested by " + userName + ".");
-                            addPoints(userName, -30);
-                            requested_music = parameters[1];
-                          }
+                case '!game':
+                  postMessage("You can find out more about Project Arrhythmia at http://projectarrhythmia.com");
+                  break;
+                case '!code':
+                  postMessage("You can find out more about what makes me tick at https://github.com/lcraver/gerald_bot");
+                  break;
+                case '!website':
+                  postMessage("Liam has a site at http://limestudios.net");
+                  break;
+                case '!points':
+                  postMessage("You have " + localStorage.getItem("points_"+userName) + " points " + userName + ".");
+                  break;
+                case '!gerald':
+                  if(parameters != null)
+                  {
+                    console.log("Gerald Command : " + parameters[0]);
+                    switch (parameters[0]) {
+                      case 'song':
+                        if(checkPoints(userName, 30) || isAdmin(userName))
+                        {
+                          postMessage("[X] Song [" + parameters[1] + "] requested by " + userName + ".");
+                          addPoints(userName, -30);
+                          requested_music = parameters[1];
+                        }
+                        else
+                          postMessage("Sorry you don't have enough points [30] to request music!");
+                        break;
+                      case 'key_chance':
+                        if(checkPoints(userName, 500) || isAdmin(userName))
+                        {
+                          var p = Math.random();
+                          if(p < 0.5)
+                            postMessage("[X] " + userName + " won a steam key Congratulations!");
                           else
-                            postMessage("Sorry you don't have enough points [30] to request music!");
-                          break;
-                        case 'key_chance':
-                          if(checkPoints(userName, 500) || isAdmin(userName))
-                          {
-                            var p = Math.random();
-                            if(p < 0.5)
-                              postMessage("[X] " + userName + " won a steam key Congratulations!");
-                            else
-                              postMessage("Aww sorry " + userName + " but you didn't win this time...keep trying!");
-                            addPoints(userName, -500);
-                          }
-                          else
-                            postMessage("Sorry you don't have enough points [500] to try to win a steam key!");
-                          break;
-                        default:
-                          postMessage(getGeraldHelpText());
-                      }
-                    }
-                    else
-                    {
+                            postMessage("Aww sorry " + userName + " but you didn't win this time...keep trying!");
+                          addPoints(userName, -500);
+                        }
+                        else
+                          postMessage("Sorry you don't have enough points [500] to try to win a steam key!");
+                        break;
+                      default:
                         postMessage(getGeraldHelpText());
                     }
-                    break;
-                  case '!clearpoints':
-                    if(isAdmin(userName))
-                    {
-                      localStorage.clear();
-                      postMessage("*nukes the points*");
-                    }
-                    break;
+                  }
+                  else
+                  {
+                      postMessage(getGeraldHelpText());
+                  }
+                  break;
+                case '!clearpoints':
+                  if(isAdmin(userName))
+                  {
+                    localStorage.clear();
+                    postMessage("*nukes the points*");
+                  }
+                  break;
               }
           }
         }
