@@ -17,7 +17,7 @@ var BOT_NAME = 'gerald_bot';
 var BOT_COLOR = '#FF9800';
 var BOT_GREETINGS = ["Heyo {{user}}! Welcome!", "What's up {{user}}!? Welcome!", "How goes it {{user}}?"];
 
-//
+// Music
 var requested_music = "";
 
 // BASE COMMAND CONSTANTS
