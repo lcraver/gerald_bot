@@ -259,7 +259,7 @@ function processMessage() {
               {
                 if(question.contains(BOT_QUESTIONS[i].q[q]))
                 {
-                    var a = BOT_QUESTIONS[i].a.replace("{{user}}", userName);
+                    var a = BOT_QUESTIONS[i].a.rand().replace("{{user}}", userName);
                     a = a.replace("{{help}}", getGeraldHelpText());
                     a = a.replace("{{song}}", requested_music);
                     postMessage(a);
