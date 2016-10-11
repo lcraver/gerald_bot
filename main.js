@@ -415,7 +415,7 @@ function getGeneralHelpText() {
 
 // Help Text
 function getGeraldHelpText() {
-  return 'You can use your points with @gerald. Current Commands: ' + GERALD_COMMANDS.join(', ');
+  return 'You can use your points with !gerald. Current Commands: ' + GERALD_COMMANDS.join(', ');
 }
 
 // Posts bot notifications
