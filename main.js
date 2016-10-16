@@ -22,7 +22,7 @@ var requested_music = "";
 
 // BASE COMMAND CONSTANTS
 var BASE_COMMANDS = ["!help", "!time", "!game", "!website", "!points", "@gerald"];
-var GERALD_COMMANDS = ["song [name] {30 points}", "key_chance {500 points}"];
+var GERALD_COMMANDS = ["song [name] {30 points}", "add_joke [joke] {60 points}", "key_chance {500 points}"];
 
 // NOTIFICATION CONSTANTS
 var CurrentNotification = 0;
@@ -293,10 +293,12 @@ function processMessage() {
           {
             var commandOnly;
             var parameters;
+            var allAfterFirstParameter;
             if(command.contains(" "))
             {
               commandOnly = command.substring(0, command.indexOf(" "));
               parameters = command.substring(command.indexOf(" ") + 1, command.length).split(" ");
+              allAfterFirstParameter = command.substring(command.indexOf(parameters[0]) + parameters[0].length + 1, command.length);
             }
             else
             {
@@ -359,6 +361,18 @@ function processMessage() {
                         else
                           postMessage("Sorry you don't have enough points [500] to try to win a steam key!");
                         break;
+                      case 'add_joke':
+                        if(checkPoints(userName, 60) || isAdmin(userName))
+                        {
+                          addPoints(userName, -60);
+                          console.log("Joke added: " + allAfterFirstParameter);
+                          var jokes = JSON.parse(localStorage.getItem("jokes"));
+                          jokes.push(allAfterFirstParameter);
+                          localStorage.setItem("jokes", JSON.stringify(jokes));
+                        }
+                        else
+                          postMessage("Sorry you don't have enough points [60] to add a joke!");
+                        break;
                       default:
                         postMessage(getGeraldHelpText());
                     }
@@ -366,6 +380,12 @@ function processMessage() {
                   else
                   {
                       postMessage(getGeraldHelpText());
+                  }
+                  break;
+                case '!addpoints':
+                  if(isAdmin(userName))
+                  {
+
                   }
                   break;
                 case '!clearpoints':
