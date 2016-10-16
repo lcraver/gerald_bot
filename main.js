@@ -203,6 +203,16 @@ function postMessage(message) {
     }, 500);
 }
 
+function sayMessage(message) {
+  sayMessage(message, 0);
+}
+
+function sayMessage(message, delay) {
+  setTimeout(function() {
+  }, delay);
+  responsiveVoice.speak(message, "US English Male", {pitch: 1});
+}
+
 function processMessage() {
     if(messageQueue.length == 0)
         return;
@@ -217,6 +227,7 @@ function processMessage() {
         if(text.indexOf(' joined the room.') != -1) {
           var userJoined = text.slice(0, text.indexOf(' joined the room.'));
             if(!BOT_WELCOMED.contains(userJoined)) {
+              sayMessage(userJoined.replace("_", " ") + " has joined the chat!", 5);
               postMessage(BOT_GREETINGS.rand().replace("{{user}}", userJoined))
               BOT_WELCOMED.push(userJoined);
             }
@@ -241,7 +252,7 @@ function processMessage() {
 
           var temp_name = "@" + BOT_NAME + ":";
 
-          if(command.contains(temp_name) && command.contains("?"))
+          if(command.contains(temp_name))
           {
             if(command.toLowerCase().indexOf(temp_name) == 0)
               question = command.toLowerCase().replace(temp_name, "");
@@ -262,6 +273,7 @@ function processMessage() {
                     var a = BOT_QUESTIONS[i].a.rand().replace("{{user}}", userName);
                     a = a.replace("{{help}}", getGeraldHelpText());
                     a = a.replace("{{song}}", requested_music);
+                    sayMessage(a);
                     postMessage(a);
                     return;
                 }
@@ -272,6 +284,7 @@ function processMessage() {
             {
               var a = ["Hey {{user}}! How's it going!?", "What's up, {{user}}!?"];
               a = a.rand().replace("{{user}}", userName);
+              sayMessage(a);
               postMessage(a);
             }
             return;
@@ -440,6 +453,14 @@ function processPoints() {
   setTimeout(processPoints, POINT_INTERVAL);
 }
 
+function addJavascript(jsname,pos) {
+  var th = document.getElementsByTagName(pos)[0];
+  var s = document.createElement('script');
+  s.setAttribute('type','text/javascript');
+  s.setAttribute('src',jsname);
+  th.appendChild(s);
+}
+
 // Bot Tick
 function tick() {
     processMessages();
@@ -451,3 +472,5 @@ function tick() {
 tick();
 processPoints();
 setTimeout(processNotifications, NOTIFICATION_INTERVAL);
+
+addJavascript('https://code.responsivevoice.org/responsivevoice.js','head');
