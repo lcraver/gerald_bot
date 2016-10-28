@@ -353,9 +353,15 @@ function processMessage() {
                         {
                           var p = Math.random();
                           if(p < 0.5)
+                          {
                             postMessage("[X] " + userName + " won a steam key Congratulations!");
+                            sayMessage("Congratulations, you won! Contact liam for your steam key!");
+                          }
                           else
+                          {
                             postMessage("Aww sorry " + userName + " but you didn't win this time...keep trying!");
+                            sayMessage("Awwww, better luck next time!");
+                          }
                           addPoints(userName, -500);
                         }
                         else
@@ -369,6 +375,7 @@ function processMessage() {
                           var jokes = JSON.parse(localStorage.getItem("jokes"));
                           jokes.push(allAfterFirstParameter);
                           localStorage.setItem("jokes", JSON.stringify(jokes));
+                          sayMessage(message);
                         }
                         else
                           postMessage("Sorry you don't have enough points [60] to add a joke!");
@@ -473,7 +480,7 @@ function processPoints() {
   setTimeout(processPoints, POINT_INTERVAL);
 }
 
-function addJavascript(jsname,pos) {
+function addJavascript(jsname, pos) {
   var th = document.getElementsByTagName(pos)[0];
   var s = document.createElement('script');
   s.setAttribute('type','text/javascript');
