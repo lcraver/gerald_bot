@@ -375,7 +375,9 @@ function processMessage() {
                           var jokes = JSON.parse(localStorage.getItem("jokes"));
                           jokes.push(allAfterFirstParameter);
                           localStorage.setItem("jokes", JSON.stringify(jokes));
+                          var message = userName + " your joke was added! Congrats!";
                           sayMessage(message);
+                          postMessage("[X] " + message);
                         }
                         else
                           postMessage("Sorry you don't have enough points [60] to add a joke!");
