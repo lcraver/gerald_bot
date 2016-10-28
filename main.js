@@ -37,6 +37,10 @@ var POINT_INTERVAL = 60000;
 var BOT_QUESTIONS = [ {
                         q: ["is there a girl squid in your life", "who do you love"],
                         a: ["I have a mega crush on Marie. :like:"]
+                      }
+                      {
+                        q: ["what language were you programmed with", "what are you made of"],
+                        a: ["javascript", "Zeros and Ones and a bit of javascript!"]
                       },
                       {
                         q: ["who is marie", "who is this marie"],
