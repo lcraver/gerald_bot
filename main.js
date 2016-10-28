@@ -40,7 +40,7 @@ var BOT_QUESTIONS = [ {
                       }
                       {
                         q: ["what language were you programmed with", "what are you made of"],
-                        a: ["javascript", "Zeros and Ones and a bit of javascript!"]
+                        a: ["javascript", "Zeros and Ones and a bit of javascript!", "I'm all squid and javascript."]
                       },
                       {
                         q: ["who is marie", "who is this marie"],
