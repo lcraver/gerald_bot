@@ -34,6 +34,7 @@ var allUsers = document.getElementById('chat-rooms').getElementsByClassName('roo
 var POINT_INTERVAL = 60000;
 
 // QUESTION CONSTANTS
+var CURRENT_JOKE = 0;
 var BOT_QUESTIONS = [ {
                         q: ["is there a girl squid in your life", "who do you love"],
                         a: ["I have a mega crush on Marie. :like:"]
@@ -100,7 +101,7 @@ var BOT_QUESTIONS = [ {
                       },
                       {
                         q: ["tell me a joke", "a joke?", "can I hear a joke", "say something funny", "entertain me", "show me something funny", "make me laugh"],
-                        a: ['Three guys stranded on a desert island find a magic lantern containing a genie, who grants them each one wish. The first guy wishes he was off the island and back home. The second guy wishes the same. The third guy says: "I\'m lonely. I wish my friends were back here."', 'A Roman walks into a bar, holds up two fingers, and says "Five beers, please."', 'A grasshopper walks into a bar. The bartender says, "We\'ve got a drink named after you." The grasshopper says, "You\'ve got a drink named Steve?"', 'A ham sandwich walks into a bar and the bartender says, "Sorry, we don\'t serve food in here."', 'A man walks into a library and asks, "Can I have a cheeseburger?" The librarian says, "Sir, this is a library." The man whispers, "Can I have a cheeseburger?"', 'An infectious disease walks into a bar. The bartender says, "We don\'t serve your kind in here." The disease replies, "Well you\'re not a very good host."', 'Did you hear about the motherboard who ran away to join the circuits?', 'Did you hear about the restaurant on the moon? Great food but no atmosphere.', 'Don\'t trust the atoms. They make up everything.', 'How do you catch a runaway laptop? With an internet.', 'I told the doctor I broke my arm in two places. He told me not to go into those places.', 'I wondered why the baseball was getting bigger. Then it hit me.', 'I\'d tell a chemestry joke, but I\'m afraid I wouldn\'t get a reaction.', 'Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad.', 'The barman says, "We don\'t serve time travelers in here." A time traveler walks into the bar.', 'The past, the present, and the future walked into a bar. It was tense.', 'There are two types of people in the world: Those who need closure', 'Time flies like an arrow. Fruit flies like a banana.', 'Two antennas got married. The ceremony dragged on, but the reception was excellent.', 'Two silkworms were in a race. They ended up in a tie. No invertebrates were harmed in the making of this joke.', 'What newspaper do the inklings prefer? The Daily Inkuirer.', 'How can you tell the blue team won the turf war? It looks like the map blue up.', 'How many tickles does it take to make an inkling laugh? tentacles.']
+                        a: ['A Roman walks into a bar, holds up two fingers, and says "Five beers, please."', 'A grasshopper walks into a bar. The bartender says, "We\'ve got a drink named after you." The grasshopper says, "You\'ve got a drink named Steve?"', 'A ham sandwich walks into a bar and the bartender says, "Sorry, we don\'t serve food in here."', 'A man walks into a library and asks, "Can I have a cheeseburger?" The librarian says, "Sir, this is a library." The man whispers, "Can I have a cheeseburger?"', 'An infectious disease walks into a bar. The bartender says, "We don\'t serve your kind in here." The disease replies, "Well you\'re not a very good host."', 'Did you hear about the motherboard who ran away to join the circuits?', 'Did you hear about the restaurant on the moon? Great food but no atmosphere.', 'Don\'t trust the atoms. They make up everything.', 'How do you catch a runaway laptop? With an internet.', 'I told the doctor I broke my arm in two places. He told me not to go into those places.', 'I wondered why the baseball was getting bigger. Then it hit me.', 'I\'d tell a chemestry joke, but I\'m afraid I wouldn\'t get a reaction.', 'Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad.', 'The barman says, "We don\'t serve time travelers in here." A time traveler walks into the bar.', 'The past, the present, and the future walked into a bar. It was tense.', 'There are two types of people in the world: Those who need closure', 'Time flies like an arrow. Fruit flies like a banana.', 'Two antennas got married. The ceremony dragged on, but the reception was excellent.', 'Two silkworms were in a race. They ended up in a tie. No invertebrates were harmed in the making of this joke.', 'What newspaper do the inklings prefer? The Daily Inkuirer.', 'How can you tell the blue team won the turf war? It looks like the map blue up.', 'How many tickles does it take to make an inkling laugh? tentacles.']
                       },
                       {
                         q: ["may the force be with you"],
@@ -164,6 +165,7 @@ $('#username-color').trigger('click');
 $('#context-menu').trigger('mouseout');
 
 var initialColor = $('#colorPremiumInput').val();
+CURRENT_JOKE = localStorage.getItem("current_joke");
 
 $('.message', container).addClass('read');
 
@@ -274,9 +276,28 @@ function processMessage() {
               {
                 if(question.contains(BOT_QUESTIONS[i].q[q]))
                 {
-                    var a = BOT_QUESTIONS[i].a.rand().replace("{{user}}", userName);
-                    a = a.replace("{{help}}", getGeraldHelpText());
-                    a = a.replace("{{song}}", requested_music);
+                    var jokeQuestions = ["tell me a joke", "a joke?", "can I hear a joke", "say something funny", "entertain me", "show me something funny", "make me laugh"];
+
+                    var a = "";
+
+                    if(jokeQuestions.contains(BOT_QUESTIONS[i].q[q]))
+                    {
+                      console.log("Asked a joke!");
+                      CURRENT_JOKE++;
+
+                      if(CURRENT_JOKE > BOT_QUESTIONS[i].a.length)
+                        CURRENT_JOKE = 0;
+
+                      localStorage.setItem("current_joke", CURRENT_JOKE);
+                      a = BOT_QUESTIONS[i].a[CURRENT_JOKE];
+                    }
+                    else
+                    {
+                      a = BOT_QUESTIONS[i].a.rand().replace("{{user}}", userName);
+                      a = a.replace("{{help}}", getGeraldHelpText());
+                      a = a.replace("{{song}}", requested_music);
+                    }
+
                     sayMessage(a);
                     postMessage(a);
                     return;
