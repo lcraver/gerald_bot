@@ -1,41 +1,30 @@
 // Made by Liam Craver @lcraver
 // Code at: github.com/lcraver/gerald_bot
 
-// CONSTANTS
-var container = $('.message-pane');
-var messageQueue = [];
-var messageCount;
-var textarea = $('#message-textarea');
-var submit = $('input[type="submit"]');
-var owner_name = "Liam";
-var admins = ["lcraver"];
-var botWritingCount = 0;
+// BOT CONFIG
+var OWNER_NAME = "Liam";
+var OWNER_USERNAME = "lcraver"; // Owner of bot
+var STREAM_MODERATORS = []; // All moderators for the stream
+var BOT_NAME = "gerald_bot"; // Username of the bot
+var BOT_GREETINGS = ["Heyo {{user}}! Welcome!", "What's up {{user}}!? Welcome!", "How goes it {{user}}?"]; // Greatings for people that join the stream.
 
-// BOT CONSTANTS
-var BOT_WELCOMED = [];
-var BOT_NAME = 'gerald_bot';
-var BOT_COLOR = '#FF9800';
-var BOT_GREETINGS = ["Heyo {{user}}! Welcome!", "What's up {{user}}!? Welcome!", "How goes it {{user}}?"];
-
-// Music
-var requested_music = "";
-
-// BASE COMMAND CONSTANTS
-var BASE_COMMANDS = ["!help", "!time", "!game", "!website", "!points", "@gerald"];
-var GERALD_COMMANDS = ["song [name] {30 points}", "add_joke [joke] {60 points}", "key_chance {500 points}"];
-
-// NOTIFICATION CONSTANTS
-var CurrentNotification = 0;
 var NOTIFICATIONS = ["If you have any questions feel free to ask your local squid with !help", "This is one crazy stream! You should probably follow ;)"];
-var NOTIFICATION_INTERVAL = 900000;
+var NOTIFICATION_INTERVAL = 900000; // Time in milliseconds till a notification is said
+var POINT_INTERVAL = 60000; // Time in milliseconds till a point is awarded
 
-// POINT CONSTANTS
-var allUsers = document.getElementById('chat-rooms').getElementsByClassName('room-pane')[0].getElementsByClassName('roster-pane')[0].getElementsByClassName('label');
-var POINT_INTERVAL = 60000;
+var BASE_COMMANDS = ["!help", "!time", "!game", "!website", "!points", "!gerald"];
+var BOT_COMMANDS = ["song [name] {30 points}", "add_joke [joke] {60 points}", "key_chance {500 points}"];
 
-// QUESTION CONSTANTS
-var CURRENT_JOKE = 0;
-var BOT_QUESTIONS = [ {
+var BOT_ACCENT = "US English Male";
+var BOT_PITCH = 1;
+var BOT_VOICE_RATE = 1;
+var BOT_VOLUME = 1;
+
+var BOT_JOKE_QUESTIONS = ["tell me a joke", "a joke?", "can I hear a joke", "say something funny", "entertain me", "show me something funny", "make me laugh"];
+
+var BOT_JOKES = ['A Roman walks into a bar, holds up two fingers, and says "Five beers, please."', 'A grasshopper walks into a bar. The bartender says, "We\'ve got a drink named after you." The grasshopper says, "You\'ve got a drink named Steve?"', 'A ham sandwich walks into a bar and the bartender says, "Sorry, we don\'t serve food in here."', 'A man walks into a library and asks, "Can I have a cheeseburger?" The librarian says, "Sir, this is a library." The man whispers, "Can I have a cheeseburger?"', 'An infectious disease walks into a bar. The bartender says, "We don\'t serve your kind in here." The disease replies, "Well you\'re not a very good host."', 'Did you hear about the motherboard who ran away to join the circuits?', 'Did you hear about the restaurant on the moon? Great food but no atmosphere.', 'Don\'t trust the atoms. They make up everything.', 'How do you catch a runaway laptop? With an internet.', 'I told the doctor I broke my arm in two places. He told me not to go into those places.', 'I wondered why the baseball was getting bigger. Then it hit me.', 'I\'d tell a chemestry joke, but I\'m afraid I wouldn\'t get a reaction.', 'Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad.', 'The barman says, "We don\'t serve time travelers in here." A time traveler walks into the bar.', 'The past, the present, and the future walked into a bar. It was tense.', 'There are two types of people in the world: Those who need closure', 'Time flies like an arrow. Fruit flies like a banana.', 'Two antennas got married. The ceremony dragged on, but the reception was excellent.', 'Two silkworms were in a race. They ended up in a tie. No invertebrates were harmed in the making of this joke.', 'What newspaper do the inklings prefer? The Daily Inkuirer.', 'How can you tell the blue team won the turf war? It looks like the map blue up.', 'How many tickles does it take to make an inkling laugh? tentacles.', 'Why is the sky so unhappy? It has the blues.'];
+
+var BOT_STANDARD_QUESTIONS = [ {
                         q: ["is there a girl squid in your life", "who do you love"],
                         a: ["I have a mega crush on Marie. :like:"]
                       },
@@ -100,10 +89,6 @@ var BOT_QUESTIONS = [ {
                         a: ["ORANGE naturally!"]
                       },
                       {
-                        q: ["tell me a joke", "a joke?", "can I hear a joke", "say something funny", "entertain me", "show me something funny", "make me laugh"],
-                        a: ['A Roman walks into a bar, holds up two fingers, and says "Five beers, please."', 'A grasshopper walks into a bar. The bartender says, "We\'ve got a drink named after you." The grasshopper says, "You\'ve got a drink named Steve?"', 'A ham sandwich walks into a bar and the bartender says, "Sorry, we don\'t serve food in here."', 'A man walks into a library and asks, "Can I have a cheeseburger?" The librarian says, "Sir, this is a library." The man whispers, "Can I have a cheeseburger?"', 'An infectious disease walks into a bar. The bartender says, "We don\'t serve your kind in here." The disease replies, "Well you\'re not a very good host."', 'Did you hear about the motherboard who ran away to join the circuits?', 'Did you hear about the restaurant on the moon? Great food but no atmosphere.', 'Don\'t trust the atoms. They make up everything.', 'How do you catch a runaway laptop? With an internet.', 'I told the doctor I broke my arm in two places. He told me not to go into those places.', 'I wondered why the baseball was getting bigger. Then it hit me.', 'I\'d tell a chemestry joke, but I\'m afraid I wouldn\'t get a reaction.', 'Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad.', 'The barman says, "We don\'t serve time travelers in here." A time traveler walks into the bar.', 'The past, the present, and the future walked into a bar. It was tense.', 'There are two types of people in the world: Those who need closure', 'Time flies like an arrow. Fruit flies like a banana.', 'Two antennas got married. The ceremony dragged on, but the reception was excellent.', 'Two silkworms were in a race. They ended up in a tie. No invertebrates were harmed in the making of this joke.', 'What newspaper do the inklings prefer? The Daily Inkuirer.', 'How can you tell the blue team won the turf war? It looks like the map blue up.', 'How many tickles does it take to make an inkling laugh? tentacles.']
-                      },
-                      {
                         q: ["may the force be with you"],
                         a: ["Sorry but I'm more of a Star Trek fan..."]
                       },
@@ -160,19 +145,22 @@ var BOT_QUESTIONS = [ {
                         a: ["@gerald song [name of song / link to song]"]
                       }];
 
-// Initiale the color pallete
-$('#username-color').trigger('click');
-$('#context-menu').trigger('mouseout');
-
-var initialColor = $('#colorPremiumInput').val();
-CURRENT_JOKE = localStorage.getItem("current_joke");
-
+// CONSTANTS Don't touch unless you really know what you're doing
+var container = $('ul.message-pane');
+var notificationContainer = $('#notifications-popup-container');
+var notificationQueue = [];
+var messageQueue = [];
+var messageCount;
+var streamTime = $('span#stream_time');
+var textarea = $('#message-textarea');
+var submit = $('input[type="submit"]');
+var botWritingCount = 0;
+var botWelcomedPeople = []; // People that have been welcomed this session.
+var CurrentNotification = 0;
+var allUsers = document.getElementById('chat-rooms').getElementsByClassName('room-pane')[0].getElementsByClassName('roster-pane')[0].getElementsByClassName('label');
+var requested_music = "";
+var currentJoke = localStorage.getItem("current_joke");
 $('.message', container).addClass('read');
-
-
-function getRandom(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 String.prototype.contains = function (_search) {
   var searchingFor = _search.toString().toLowerCase();
@@ -194,18 +182,10 @@ Array.prototype.contains = function(k) {
 function postMessage(message) {
     botWritingCount++;
 
-    $('.user-color-list').attr('data-color', "#e3a85b").trigger('click');
     setTimeout(function(){
         textarea.val(message);
         submit.trigger('click');
-
-        // Restore name color
         botWritingCount--;
-        if(botWritingCount == 0) {
-            setTimeout(function() {
-                $('.user-color-list').attr('data-color', "#e3a85b").trigger('click');
-            }, 300);
-        }
     }, 500);
 }
 
@@ -216,7 +196,21 @@ function sayMessage(message) {
 function sayMessage(message, delay) {
   setTimeout(function() {
   }, delay);
-  responsiveVoice.speak(message, "US English Male", {pitch: 1});
+  responsiveVoice.speak(message, BOT_ACCENT, {pitch: BOT_PITCH, rate: BOT_VOICE_RATE, volume: BOT_VOLUME});
+}
+
+function processNotification() {
+    if(notificationQueue.length == 0)
+        return;
+
+    var notification = notificationQueue.shift();
+    var title = notification.find("p.title").text();
+    var message = notification.find("p.message").text();
+
+    if(message.contains("New follower"))
+    {
+      console.log("You've got a new follower named " + title);
+    }
 }
 
 function processMessage() {
@@ -232,10 +226,10 @@ function processMessage() {
         // Someone entered the room
         if(text.indexOf(' joined the room.') != -1) {
           var userJoined = text.slice(0, text.indexOf(' joined the room.'));
-            if(!BOT_WELCOMED.contains(userJoined)) {
+            if(!botWelcomedPeople.contains(userJoined)) {
               sayMessage(userJoined.replace("_", " ") + " has joined the chat!", 5);
               postMessage(BOT_GREETINGS.rand().replace("{{user}}", userJoined))
-              BOT_WELCOMED.push(userJoined);
+              botWelcomedPeople.push(userJoined);
             }
         }
     } else {
@@ -264,43 +258,47 @@ function processMessage() {
               question = command.toLowerCase().replace(temp_name, "");
             else
               question = command.toLowerCase();
+
+            question = question.substring(1, question.length);
             askingQuestion = true;
           }
 
           if(askingQuestion)
           {
-            console.log("ask gerald: " + question);
-            for(var i = 0; i < BOT_QUESTIONS.length; i++)
+            var a = "";
+
+            if(BOT_JOKE_QUESTIONS.contains(question))
             {
-              for(var q = 0; q < BOT_QUESTIONS[i].q.length; q++)
+              console.log("Asked a joke!");
+              currentJoke++;
+
+              if(currentJoke > BOT_JOKES.length)
+                currentJoke = 0;
+
+              localStorage.setItem("current_joke", currentJoke);
+              a = BOT_JOKES[currentJoke];
+
+              sayMessage(a);
+              postMessage(a);
+              return;
+            }
+            else
+            {
+              console.log("Ask gerald: " + question);
+              for(var i = 0; i < BOT_STANDARD_QUESTIONS.length; i++)
               {
-                if(question.contains(BOT_QUESTIONS[i].q[q]))
+                for(var q = 0; q < BOT_STANDARD_QUESTIONS[i].q.length; q++)
                 {
-                    var jokeQuestions = ["tell me a joke", "a joke?", "can I hear a joke", "say something funny", "entertain me", "show me something funny", "make me laugh"];
-
-                    var a = "";
-
-                    if(jokeQuestions.contains(BOT_QUESTIONS[i].q[q]))
-                    {
-                      console.log("Asked a joke!");
-                      CURRENT_JOKE++;
-
-                      if(CURRENT_JOKE > BOT_QUESTIONS[i].a.length)
-                        CURRENT_JOKE = 0;
-
-                      localStorage.setItem("current_joke", CURRENT_JOKE);
-                      a = BOT_QUESTIONS[i].a[CURRENT_JOKE];
-                    }
-                    else
-                    {
-                      a = BOT_QUESTIONS[i].a.rand().replace("{{user}}", userName);
+                  if(question.contains(BOT_STANDARD_QUESTIONS[i].q[q]))
+                  {
+                      a = BOT_STANDARD_QUESTIONS[i].a.rand().replace("{{user}}", userName);
                       a = a.replace("{{help}}", getGeraldHelpText());
                       a = a.replace("{{song}}", requested_music);
-                    }
 
-                    sayMessage(a);
-                    postMessage(a);
-                    return;
+                      sayMessage(a);
+                      postMessage(a);
+                      return;
+                  }
                 }
               }
             }
@@ -335,14 +333,18 @@ function processMessage() {
                     var availableCommands = BASE_COMMANDS;
                     postMessage(getGeraldHelpText());
                 break;
+                case '!streamtime':
+                  var timeMessage = 'The stream has been active for ' + streamTime.text() + ' hours.';
+                  postMessage(timeMessage);
+                  break;
                 case '!time':
                   var hour = new Date().getHours();
                   var timeMessage = 'The current time is ' + (new Date().toLocaleTimeString()) + ".";
 
                   if(hour < 5)
-                    timeMessage += " " + owner_name + "should definitely be in bed..."
+                    timeMessage += " " + OWNER_NAME + "should definitely be in bed..."
                   else if(hour < 8)
-                    timeMessage += " " + owner_name + "either didn't go to bed or woke up really early (bet it was the first one)."
+                    timeMessage += " " + OWNER_NAME + "either didn't go to bed or woke up really early (bet it was the first one)."
 
                   postMessage(timeMessage);
                   break;
@@ -364,7 +366,7 @@ function processMessage() {
                     console.log("Gerald Command : " + parameters[0]);
                     switch (parameters[0]) {
                       case 'song':
-                        if(checkPoints(userName, 30) || isAdmin(userName))
+                        if(checkPoints(userName, 30) || isOwner(userName))
                         {
                           postMessage("[X] Song [" + parameters[1] + "] requested by " + userName + ".");
                           addPoints(userName, -30);
@@ -374,7 +376,7 @@ function processMessage() {
                           postMessage("Sorry you don't have enough points [30] to request music!");
                         break;
                       case 'key_chance':
-                        if(checkPoints(userName, 500) || isAdmin(userName))
+                        if(checkPoints(userName, 500) || isOwner(userName))
                         {
                           var p = Math.random();
                           if(p < 0.5)
@@ -393,7 +395,7 @@ function processMessage() {
                           postMessage("Sorry you don't have enough points [500] to try to win a steam key!");
                         break;
                       case 'add_joke':
-                        if(checkPoints(userName, 60) || isAdmin(userName))
+                        if(checkPoints(userName, 60) || isOwner(userName))
                         {
                           addPoints(userName, -60);
                           console.log("Joke added: " + allAfterFirstParameter);
@@ -417,17 +419,21 @@ function processMessage() {
                   }
                   break;
                 case '!addpoints':
-                  if(isAdmin(userName))
+                  if(isOwner(userName))
                   {
-
+                    addPoints(parameters[0], parameters[1]);
                   }
                   break;
                 case '!clearpoints':
-                  if(isAdmin(userName))
+                  if(isOwner(userName))
                   {
                     localStorage.clear();
-                    postMessage("*nukes the points*");
+                    postMessage("*nukes all the points*");
                   }
+                  break;
+                case '!cleanuppoints':
+                  if(isOwner(userName))
+                    cleanUpPoints();
                   break;
               }
           }
@@ -435,11 +441,35 @@ function processMessage() {
     }
 }
 
-// Returns if User is Admin
-function isAdmin(userName) {
-  for(var i = 0; i < admins.length; i++)
+function cleanUpPoints() {
+  var localStorageArray = Object.keys(localStorage);
+
+  for(var i = 0; i < localStorageArray.length; i++)
   {
-    if(admins[i].toLowerCase() == userName.toLowerCase())
+    if(localStorageArray[i].contains("points_") && localStorage.getItem(localStorageArray[i]) < 5)
+    {
+        //console.log(localStorageArray[i] + " : " + localStorage.getItem(localStorageArray[i]));
+        console.log("Cleaned up small point counts.");
+        localStorage.removeItem(localStorageArray[i]);
+    }
+  }
+}
+
+// Returns if User is Admin
+function isOwner(userName) {
+  if(userName == OWNER_USERNAME)
+    return true;
+}
+
+// Returns if User is Admin or Moderator
+function isOwnerOrMod(userName) {
+
+  if(userName == OWNER_USERNAME)
+    return true;
+
+  for(var i = 0; i < STREAM_MODERATORS.length; i++)
+  {
+    if(STREAM_MODERATORS[i].toLowerCase() == userName.toLowerCase())
       return true;
   }
 }
@@ -458,7 +488,20 @@ function checkPoints(_user, _points) {
 }
 
 function addPoints(_user, _add) {
-  localStorage.setItem("points_"+_user, getPoints(_user) + _add);
+  localStorage.setItem("points_"+_user, getPoints(_user) + parseInt(_add, 10));
+}
+
+function processNotifications() {
+  // Get new notifications since last check
+  var newNotifications = $('.notification-live-text:not(.read)', notificationContainer);
+
+  newNotifications.each(function() {
+      // Mark message as read
+      $(this).addClass('read');
+
+      // Add new notifications to the queue
+      notificationQueue.push($(this));
+  });
 }
 
 // Manages Message Queue
@@ -482,11 +525,11 @@ function getGeneralHelpText() {
 
 // Help Text
 function getGeraldHelpText() {
-  return 'You can use your points with !gerald. Current Commands: ' + GERALD_COMMANDS.join(', ');
+  return 'You can use your points with !gerald. Current Commands: ' + BOT_COMMANDS.join(', ');
 }
 
 // Posts bot notifications
-function processNotifications() {
+function processBotMessages() {
 
   postMessage(NOTIFICATIONS[CurrentNotification]);
 
@@ -494,14 +537,16 @@ function processNotifications() {
   if(CurrentNotification >= NOTIFICATIONS.length)
     CurrentNotification = 0;
 
-  setTimeout(processNotifications, NOTIFICATION_INTERVAL);
+  setTimeout(processBotMessages, NOTIFICATION_INTERVAL);
 }
 
 // Adds a point to each online user
 function processPoints() {
-  for(var i = 0; i < allUsers.length; i++)
+
+  if(streamTime != null)
   {
-    localStorage.setItem("points_"+allUsers[i].innerHTML, getPoints(allUsers[i].innerHTML) + 1);
+    for(var i = 0; i < allUsers.length; i++)
+      localStorage.setItem("points_"+allUsers[i].innerHTML, getPoints(allUsers[i].innerHTML) + 1);
   }
 
   setTimeout(processPoints, POINT_INTERVAL);
@@ -510,8 +555,8 @@ function processPoints() {
 function addJavascript(jsname, pos) {
   var th = document.getElementsByTagName(pos)[0];
   var s = document.createElement('script');
-  s.setAttribute('type','text/javascript');
-  s.setAttribute('src',jsname);
+  s.setAttribute('type', 'text/javascript');
+  s.setAttribute('src', jsname);
   th.appendChild(s);
 }
 
@@ -520,11 +565,15 @@ function tick() {
     processMessages();
     processMessage();
 
+    //processNotifications();
+    //processNotification();
+
     setTimeout(tick, 300);
 }
 
 tick();
 processPoints();
-setTimeout(processNotifications, NOTIFICATION_INTERVAL);
+processBotMessages();
+setTimeout(processBotMessages, NOTIFICATION_INTERVAL);
 
 addJavascript('https://code.responsivevoice.org/responsivevoice.js','head');
