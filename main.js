@@ -573,7 +573,6 @@ function tick() {
 
 tick();
 processPoints();
-processBotMessages();
 setTimeout(processBotMessages, NOTIFICATION_INTERVAL);
 
 addJavascript('https://code.responsivevoice.org/responsivevoice.js','head');
