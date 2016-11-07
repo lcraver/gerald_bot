@@ -326,7 +326,7 @@ function processMessage() {
             else
             {
               commandOnly = command;
-              parameters = null;
+              parameters = [];
             }
             switch(commandOnly.toLowerCase()) {
                 case '!help':
@@ -358,7 +358,10 @@ function processMessage() {
                   postMessage("Liam has a site at http://limestudios.net");
                   break;
                 case '!points':
-                  postMessage("You have " + localStorage.getItem("points_"+userName) + " points " + userName + ".");
+                  if(parameters.length > 0)
+                    postMessage("They have " + localStorage.getItem("points_"+parameters[0].substring(1,parameters[0].length)) + " points.");
+                  else
+                    postMessage("You have " + localStorage.getItem("points_"+userName) + " points " + userName + ".");
                   break;
                 case '!gerald':
                   if(parameters != null)
