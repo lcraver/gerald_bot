@@ -363,6 +363,30 @@ function processMessage() {
                   else
                     postMessage("You have " + localStorage.getItem("points_"+userName) + " points " + userName + ".");
                   break;
+                case '!leaderboard':
+                  var results = [];
+                  for (var i = 0; i < window.localStorage.length; i++) {
+                    key = window.localStorage.key(i);
+                    if (key.contains("points_")) {
+                        var points = window.localStorage.getItem(key);
+                        var person = key.substring(7, key.length);
+                        if(person != BOT_NAME)
+                          results.push({"person": person, "points": points});
+                    }
+                  }
+
+                  results.sort(function(a,b) {
+                      return b.points - a.points;
+                  });
+
+                  results = results.slice(0,10);
+
+                  var geraldStr = "\n - LEADERBOARD -";
+                  for (var i = 0; i < results.length; i++) {
+                    geraldStr += "\n " + (i+1) + " - " + results[i].person + " : " + results[i].points;
+                  }
+                  postMessage(geraldStr);
+                  break;
                 case '!gerald':
                   if(parameters != null)
                   {
