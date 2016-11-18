@@ -22,128 +22,153 @@ var BOT_VOLUME = 1;
 
 var BOT_JOKE_QUESTIONS = ["tell me a joke", "a joke?", "can I hear a joke", "say something funny", "entertain me", "show me something funny", "make me laugh"];
 
-var BOT_JOKES = ['A Roman walks into a bar, holds up two fingers, and says "Five beers, please."', 'A grasshopper walks into a bar. The bartender says, "We\'ve got a drink named after you." The grasshopper says, "You\'ve got a drink named Steve?"', 'A ham sandwich walks into a bar and the bartender says, "Sorry, we don\'t serve food in here."', 'A man walks into a library and asks, "Can I have a cheeseburger?" The librarian says, "Sir, this is a library." The man whispers, "Can I have a cheeseburger?"', 'An infectious disease walks into a bar. The bartender says, "We don\'t serve your kind in here." The disease replies, "Well you\'re not a very good host."', 'Did you hear about the motherboard who ran away to join the circuits?', 'Did you hear about the restaurant on the moon? Great food but no atmosphere.', 'Don\'t trust the atoms. They make up everything.', 'How do you catch a runaway laptop? With an internet.', 'I told the doctor I broke my arm in two places. He told me not to go into those places.', 'I wondered why the baseball was getting bigger. Then it hit me.', 'I\'d tell a chemestry joke, but I\'m afraid I wouldn\'t get a reaction.', 'Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad.', 'The barman says, "We don\'t serve time travelers in here." A time traveler walks into the bar.', 'The past, the present, and the future walked into a bar. It was tense.', 'There are two types of people in the world: Those who need closure', 'Time flies like an arrow. Fruit flies like a banana.', 'Two antennas got married. The ceremony dragged on, but the reception was excellent.', 'Two silkworms were in a race. They ended up in a tie. No invertebrates were harmed in the making of this joke.', 'What newspaper do the inklings prefer? The Daily Inkuirer.', 'How can you tell the blue team won the turf war? It looks like the map blue up.', 'How many tickles does it take to make an inkling laugh? tentacles.', 'Why is the sky so unhappy? It has the blues.'];
+var BOT_JOKES = [
+  'A Roman walks into a bar, holds up two fingers, and says "Five beers, please."',
+  'A grasshopper walks into a bar. The bartender says, "We\'ve got a drink named after you." The grasshopper says, "You\'ve got a drink named Steve?"',
+  'A ham sandwich walks into a bar and the bartender says, "Sorry, we don\'t serve food in here."',
+  'A man walks into a library and asks, "Can I have a cheeseburger?" The librarian says, "Sir, this is a library." The man whispers, "Can I have a cheeseburger?"',
+  'An infectious disease walks into a bar. The bartender says, "We don\'t serve your kind in here." The disease replies, "Well you\'re not a very good host."',
+  'Did you hear about the motherboard who ran away to join the circuits?',
+  'Did you hear about the restaurant on the moon? Great food but no atmosphere.',
+  'Don\'t trust the atoms. They make up everything.',
+  'How do you catch a runaway laptop? With an internet.',
+  'I told the doctor I broke my arm in two places. He told me not to go into those places.',
+  'I wondered why the baseball was getting bigger. Then it hit me.',
+  'I\'d tell a chemestry joke, but I\'m afraid I wouldn\'t get a reaction.',
+  'Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad.',
+  'The barman says, "We don\'t serve time travelers in here." A time traveler walks into the bar.',
+  'The past, the present, and the future walked into a bar. It was tense.',
+  'There are two types of people in the world: Those who need closure',
+  'Time flies like an arrow. Fruit flies like a banana.',
+  'Two antennas got married. The ceremony dragged on, but the reception was excellent.',
+  'Two silkworms were in a race. They ended up in a tie. No invertebrates were harmed in the making of this joke.',
+  'What newspaper do the inklings prefer? The Daily Inkuirer.',
+  'How can you tell the blue team won the turf war? It looks like the map blue up.',
+  'How many tickles does it take to make an inkling laugh? tentacles.',
+  'Why is the sky so unhappy? It has the blues.'];
 
-var BOT_STANDARD_QUESTIONS = [ {
-                        q: ["is there a girl squid in your life", "who do you love"],
-                        a: ["I have a mega crush on Marie. :like:"]
-                      },
-                      {
-                        q: ["what language were you programmed with", "what are you made of"],
-                        a: ["javascript", "Zeros and Ones and a bit of javascript!", "I'm all squid and javascript."]
-                      },
-                      {
-                        q: ["who is marie", "who is this marie"],
-                        a: ["Only the cutest squid around!"]
-                      },
-                      {
-                        q: ["how's it going", "how are you", "is everything good"],
-                        a: ["Everything is great :D"]
-                      },
-                      {
-                        q: ["what is your name", "what's your name"],
-                        a: ["umm...gerald :lips:"]
-                      },
-                      {
-                        q: ["what are you", "who are you"],
-                        a: ["The mascot character!", "A splatoon plush sometimes seen in the background of the streams.", "Your worst nightmare!?", "The bot to rule all bots!", "I'm not even sure...am I a kid or a squid!?"]
-                      },
-                      {
-                        q: ["are you a kid"],
-                        a: ["No I'm a squid of course!"]
-                      },
-                      {
-                        q: ["are you a squid"],
-                        a: ["No I'm a kid of course!"]
-                      },
-                      {
-                        q: ["are you real"],
-                        a: ["I'm the realest squid around!"]
-                      },
-                      {
-                        q: ["what do you look like"],
-                        a: ["An orange squid currently."]
-                      },
-                      {
-                        q: ["where do you live"],
-                        a: ["Inkopolis."]
-                      },
-                      {
-                        q: ["who made you", "who created you", "who is your creator", "who is your father"],
-                        a: ["Liam of course!", "I'm not sure *whispers* I have a theory I might be adopted. *whispers*"]
-                      },
-                      {
-                        q: ["will you marry me", "will you be my waifu"],
-                        a: ["Eww no way!", "Not interested sorry...", "You know I'm a dude right?"]
-                      },
-                      {
-                        q: ["do a barrel roll"],
-                        a: ["How about a swiss roll? https://upload.wikimedia.org/wikipedia/commons/a/a3/HK_Food_Swiss_Roll_Saint_Honore_Cake.JPG"]
-                      },
-                      {
-                        q: ["give me strength"],
-                        a: ["I think you'll have to get that yourself...sorry {{user}}"]
-                      },
-                      {
-                        q: ["what's your favorite color", "what is your favorite color"],
-                        a: ["ORANGE naturally!"]
-                      },
-                      {
-                        q: ["may the force be with you"],
-                        a: ["Sorry but I'm more of a Star Trek fan..."]
-                      },
-                      {
-                        q: ["beam me up"],
-                        a: ["Beaming up {{user}}! *future noises*", "Right away, captain."]
-                      },
-                      {
-                        q: ["what is splatoon"],
-                        a: ["A game staring us inklings! Nice to see us squids getting represented in games finally!"]
-                      },
-                      {
-                        q: ["what is the best os", "what is your favorite os", "what os is best"],
-                        a: ["If I don't say windows Liam will be mad..."]
-                      },
-                      {
-                        q: ["what is better playstation or xbox", "what is the best console"],
-                        a: ["Why limit it to only those? I think the WiiU is the best!", "Definitely the playstation!"]
-                      },
-                      {
-                        q: ["goodnight", "later", "bye"],
-                        a: ["Thanks for stopping by and hanging out I know you all come for me", "I'll miss you! *holds out tentacle towards the screen longingly*", "Aww do you have to go?"]
-                      },
-                      {
-                        q: ["help"],
-                        a: ["{{help}}"]
-                      },
-                      {
-                        q: ["i like you", "you're cool", "you are cool", "i love you"],
-                        a: ["Aww shucks thanks :)", ";)", "Thanks! I try!"]
-                      },
-                      {
-                        q: ["you a bitch", "bitch", "fuck you", "I hate you"],
-                        a: ["You are very mean {{user}}!", "Yeah well I don't hold it against you.", "*hugs you anyways*"]
-                      },
-                      {
-                        q: ["say my name"],
-                        a: ["ok...{{user}}"]
-                      },
-                      {
-                        q: ["what is my name"],
-                        a: ["...{{user}}"]
-                      },
-                      {
-                        q: ["will there be a stream"],
-                        a: ["Who knows? Maybe? *shouts* Liam get streaming the people want you *shouts*"]
-                      },
-                      {
-                        q: ["what's the current requested song", "what's the current requested music", "what is the current requested song", "what is the current requested music"],
-                        a: ["The current requested song is {{song}}"]
-                      },
-                      {
-                        q: ["how do I request a song", "how do I request music"],
-                        a: ["@gerald song [name of song / link to song]"]
-                      }];
+var BOT_STANDARD_QUESTIONS = [
+  {
+    q: ["is there a girl squid in your life", "who do you love"],
+    a: ["I have a mega crush on Marie. :like:"]
+  },
+  {
+    q: ["what language were you programmed with", "what are you made of"],
+    a: ["javascript", "Zeros and Ones and a bit of javascript!", "I'm all squid and javascript."]
+  },
+  {
+    q: ["who is marie", "who is this marie"],
+    a: ["Only the cutest squid around!"]
+  },
+  {
+    q: ["how's it going", "how are you", "is everything good"],
+    a: ["Everything is great :D"]
+  },
+  {
+    q: ["what is your name", "what's your name"],
+    a: ["umm...gerald :lips:"]
+  },
+  {
+    q: ["what are you", "who are you"],
+    a: ["The mascot character!", "A splatoon plush sometimes seen in the background of the streams.", "Your worst nightmare!?", "The bot to rule all bots!", "I'm not even sure...am I a kid or a squid!?"]
+  },
+  {
+    q: ["are you a kid"],
+    a: ["No I'm a squid of course!"]
+  },
+  {
+    q: ["are you a squid"],
+    a: ["No I'm a kid of course!"]
+  },
+  {
+    q: ["are you real"],
+    a: ["I'm the realest squid around!"]
+  },
+  {
+    q: ["what do you look like"],
+    a: ["An orange squid currently."]
+  },
+  {
+    q: ["where do you live"],
+    a: ["Inkopolis."]
+  },
+  {
+    q: ["who made you", "who created you", "who is your creator", "who is your father"],
+    a: ["Liam of course!", "I'm not sure *whispers* I have a theory I might be adopted. *whispers*"]
+  },
+  {
+    q: ["will you marry me", "will you be my waifu"],
+    a: ["Eww no way!", "Not interested sorry...", "You know I'm a dude right?"]
+  },
+  {
+    q: ["do a barrel roll"],
+    a: ["How about a swiss roll? https://upload.wikimedia.org/wikipedia/commons/a/a3/HK_Food_Swiss_Roll_Saint_Honore_Cake.JPG"]
+  },
+  {
+    q: ["give me strength"],
+    a: ["I think you'll have to get that yourself...sorry {{user}}"]
+  },
+  {
+    q: ["what's your favorite color", "what is your favorite color"],
+    a: ["ORANGE naturally!"]
+  },
+  {
+    q: ["may the force be with you"],
+    a: ["Sorry but I'm more of a Star Trek fan..."]
+  },
+  {
+    q: ["beam me up"],
+    a: ["Beaming up {{user}}! *future noises*", "Right away, captain."]
+  },
+  {
+    q: ["what is splatoon"],
+    a: ["A game staring us inklings! Nice to see us squids getting represented in games finally!"]
+  },
+  {
+    q: ["what is the best os", "what is your favorite os", "what os is best"],
+    a: ["If I don't say windows Liam will be mad..."]
+  },
+  {
+    q: ["what is better playstation or xbox", "what is the best console"],
+    a: ["Why limit it to only those? I think the WiiU is the best!", "Definitely the playstation!"]
+  },
+  {
+    q: ["goodnight", "later", "bye"],
+    a: ["Thanks for stopping by and hanging out I know you all come for me", "I'll miss you! *holds out tentacle towards the screen longingly*", "Aww do you have to go?"]
+  },
+  {
+    q: ["help"],
+    a: ["{{help}}"]
+  },
+  {
+    q: ["i like you", "you're cool", "you are cool", "i love you"],
+    a: ["Aww shucks thanks :)", ";)", "Thanks! I try!"]
+  },
+  {
+    q: ["you a bitch", "bitch", "fuck you", "I hate you"],
+    a: ["You are very mean {{user}}!", "Yeah well I don't hold it against you.", "*hugs you anyways*"]
+  },
+  {
+    q: ["say my name"],
+    a: ["ok...{{user}}"]
+  },
+  {
+    q: ["what is my name"],
+    a: ["...{{user}}"]
+  },
+  {
+    q: ["will there be a stream"],
+    a: ["Who knows? Maybe? *shouts* Liam get streaming the people want you *shouts*"]
+  },
+  {
+    q: ["what's the current requested song", "what's the current requested music", "what is the current requested song", "what is the current requested music"],
+    a: ["The current requested song is {{song}}"]
+  },
+  {
+    q: ["how do I request a song", "how do I request music"],
+    a: ["@gerald song [name of song / link to song]"]
+  }
+];
 
 // CONSTANTS Don't touch unless you really know what you're doing
 var container = $('ul.message-pane');
@@ -272,7 +297,7 @@ function processMessage() {
               console.log("Asked a joke!");
               currentJoke++;
 
-              if(currentJoke > BOT_JOKES.length)
+              if(currentJoke > BOT_JOKES.length - 1)
                 currentJoke = 0;
 
               localStorage.setItem("current_joke", currentJoke);
@@ -370,7 +395,7 @@ function processMessage() {
                     if (key.contains("points_")) {
                         var points = window.localStorage.getItem(key);
                         var person = key.substring(7, key.length);
-                        if(person != BOT_NAME)
+                        if(person != BOT_NAME && person != OWNER_USERNAME)
                           results.push({"person": person, "points": points});
                     }
                   }
