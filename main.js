@@ -45,7 +45,8 @@ var BOT_JOKES = [
   'What newspaper do the inklings prefer? The Daily Inkuirer.',
   'How can you tell the blue team won the turf war? It looks like the map blue up.',
   'How many tickles does it take to make an inkling laugh? tentacles.',
-  'Why is the sky so unhappy? It has the blues.'];
+  'Why is the sky so unhappy? It has the blues.',
+  'Can a kangaroo jump higher than a house? Of course, a house doesn’t jump at all.'];
 
 var BOT_STANDARD_QUESTIONS = [
   {
