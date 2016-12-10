@@ -50,6 +50,10 @@ var BOT_JOKES = [
 
 var BOT_STANDARD_QUESTIONS = [
   {
+    q: ["how do I get points", "what are points"],
+    a: ["You get a point for every minute you watch the stream :)"]
+  },
+  {
     q: ["is there a girl squid in your life", "who do you love"],
     a: ["I have a mega crush on Marie. :like:"]
   },
