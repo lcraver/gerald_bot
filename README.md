@@ -1,4 +1,8 @@
 # LiveCodingTV Chat Bot
+
+##This bot is not depreciated and I plan to continue to support it but I've made a newer version that requires a bit more setup but is overall less hacky and has a few more features. You can check it out [HERE](https://github.com/lcraver/gerald_bot_v2).
+
+
 A chat bot made for LiveCoding.tv
 
 ### How To use
