@@ -432,6 +432,17 @@ function processMessage() {
                         else
                           postMessage("Sorry you don't have enough points [30] to request music!");
                         break;
+                      case 'gift':
+                        // gift 40 @aliske
+                        if(checkPoints(userName, parameters[1]) || isOwner(userName))
+                        {
+                          postMessage(parameters[1] + " points gifted to " + parameters[2] + ", by " + userName);
+                          addPoints(userName, -parameters[1]);
+                          addPoints(parameters[2], parameters[1]);
+                        }
+                        else
+                          postMessage("Sorry you don't have enough points to make that gift!");
+                        break;
                       case 'key_chance':
                         if(checkPoints(userName, 500) || isOwner(userName))
                         {
